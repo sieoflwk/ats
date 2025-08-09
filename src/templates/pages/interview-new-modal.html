@@ -1,0 +1,22 @@
+<div id="newInterviewModal" class="modal hidden">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <h2 style="margin:0;font-size:18px;">새 면접 일정</h2>
+      <button class="btn" onclick="document.getElementById('newInterviewModal').classList.add('hidden')">✕</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group"><label class="form-label">지원자 이름</label><input id="iv_candidateName" class="form-input" required></div>
+      <div class="form-group"><label class="form-label">직무</label><input id="iv_position" class="form-input"></div>
+      <div class="form-group"><label class="form-label">면접 유형</label><input id="iv_type" class="form-input" value="1차면접"></div>
+      <div class="form-group"><label class="form-label">날짜</label><input id="iv_date" type="date" class="form-input"></div>
+      <div class="form-group"><label class="form-label">시간</label><input id="iv_time" type="time" class="form-input"></div>
+      <div class="form-group"><label class="form-label">소요시간(분)</label><input id="iv_duration" type="number" class="form-input" value="60" min="15"></div>
+      <div class="form-group"><label class="form-label">면접관</label><input id="iv_interviewer" class="form-input"></div>
+      <div class="form-group"><label class="form-label">장소</label><input id="iv_location" class="form-input"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button id="iv_save" class="btn btn-primary" style="flex:1;">등록</button>
+    </div>
+  </div>
+</div>
+

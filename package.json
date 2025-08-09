@@ -1,0 +1,16 @@
+{
+  "name": "workflow-ats",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "live-server --port=3000 --entry-file=index.html",
+    "build": "echo 'Static site - no build needed'",
+    "lint": "echo 'no linter configured'",
+    "format": "echo 'format stub'",
+    "deploy": "echo 'deploy stub'"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
+

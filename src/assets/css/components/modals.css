@@ -1,0 +1,5 @@
+.modal { position: fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,.3); z-index: 20; padding: 16px; }
+.modal:not(.hidden) { display:flex; }
+.modal .modal-content { width:100%; max-width: 640px; background:#fff; border:1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); padding: 20px; }
+.hidden { display:none; }
+

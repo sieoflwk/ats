@@ -1,0 +1,4 @@
+.card { background:#fff; border:1px solid var(--border); border-radius: 16px; padding: 20px; }
+.card-header { display:flex; align-items:center; justify-content:space-between; padding-bottom: 12px; margin-bottom: 12px; border-bottom:1px solid var(--border); }
+.card-title { font-size: 18px; font-weight: 700; }
+

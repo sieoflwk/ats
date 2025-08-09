@@ -1,0 +1,39 @@
+<section class="page-content" id="candidates">
+  <div class="page-header">
+    <h1 class="page-title">지원자 관리</h1>
+    <p class="page-subtitle">지원자 필터링/등록/상세 관리를 수행합니다.</p>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="search-filter-bar" style="flex:1;">
+        <div class="search-input"><input type="text" class="form-input" id="candidateSearch" placeholder="이름/이메일/스킬 검색..."></div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-primary" id="openNewCandidate">+ 새 지원자</button>
+      </div>
+    </div>
+    <div class="table-container">
+      <table class="table">
+        <thead><tr><th>이름</th><th>직무</th><th>상태</th><th>지원일</th></tr></thead>
+        <tbody id="candidatesTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;color:var(--text-secondary);">로딩 중...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <!-- 상세 모달 -->
+  <div data-include="candidate-detail-modal"></div>
+  <script type="module">
+    import { CandidateController } from '../../js/pages/candidates/candidate-controller.js';
+    import { CandidateForm } from '../../js/pages/candidates/candidate-form.js';
+    const cc = new CandidateController();
+    await cc.init();
+    window.addEventListener('candidates:updated', () => cc.render((document.getElementById('candidateSearch')?.value)||''));
+    const btn = document.getElementById('openNewCandidate');
+    if (btn) btn.addEventListener('click', async () => { (new CandidateForm()).openCreate(); });
+    // 모달 템플릿 삽입
+    fetch('src/templates/pages/candidate-detail-modal.html').then(r=>r.text()).then(html=>{
+      const holder = document.querySelector('[data-include="candidate-detail-modal"]');
+      if (holder) holder.innerHTML = html;
+    });
+  </script>
+</section>
+

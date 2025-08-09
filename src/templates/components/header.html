@@ -1,0 +1,28 @@
+<div class="header">
+  <a href="#dashboard" class="logo nav-item" data-page="dashboard" style="text-decoration:none;">
+    <div class="logo-icon">W</div>
+    <div class="logo-text">워크플로우</div>
+  </a>
+  <nav class="header-nav">
+    <a class="nav-item" data-page="dashboard">대시보드</a>
+    <a class="nav-item" data-page="candidates">지원자</a>
+    <a class="nav-item" data-page="jobs">채용공고</a>
+    <a class="nav-item" data-page="interviews">면접</a>
+    <a class="nav-item" data-page="reports">리포트</a>
+  </nav>
+  <div class="header-right">
+    <button id="themeToggle" class="theme-toggle" title="테마 전환">☀️</button>
+    <button class="profile-btn" onclick="toggleProfileMenu(event)">
+      <div class="profile-avatar">👤</div>
+      <div class="profile-info">
+        <div class="profile-name">게스트</div>
+        <div class="profile-role"></div>
+      </div>
+    </button>
+    <div id="profileMenu" class="profile-menu hidden" style="right:0">
+      <button class="menu-item" onclick="location.hash='#settings'">⚙️ 설정</button>
+      <button class="menu-item" onclick="logout()">🚪 로그아웃</button>
+    </div>
+  </div>
+</div>
+

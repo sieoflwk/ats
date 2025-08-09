@@ -1,0 +1,6 @@
+/* Light theme placeholder - extend as needed */
+body[data-theme="light"], body:not([data-theme]) {
+  background: var(--white);
+  color: var(--gray-900);
+}
+

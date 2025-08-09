@@ -1,0 +1,23 @@
+.status-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing:.02em; }
+.status-badge::before { content:''; width:6px; height:6px; border-radius:50%; }
+
+/* 신규 */
+.status-new, .status-신규 { color:#2563eb; background:#e0ecff; }
+.status-new::before, .status-신규::before { background:#2563eb; }
+
+/* 서류통과/검토중 */
+.status-review, .status-서류통과, .status-검토중 { color:#d97706; background:#fff3da; }
+.status-review::before, .status-서류통과::before, .status-검토중::before { background:#d97706; }
+
+/* 면접대기 */
+.status-interview, .status-면접대기 { color:#7c3aed; background:#f1e7ff; }
+.status-interview::before, .status-면접대기::before { background:#7c3aed; }
+
+/* 채용완료/최종합격 */
+.status-offer, .status-채용완료, .status-최종합격 { color:#059669; background:#dff7ec; }
+.status-offer::before, .status-채용완료::before, .status-최종합격::before { background:#059669; }
+
+/* 불합격 */
+.status-rejected, .status-불합격 { color:#dc2626; background:#ffe6e6; }
+.status-rejected::before, .status-불합격::before { background:#dc2626; }
+

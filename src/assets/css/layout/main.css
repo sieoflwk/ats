@@ -1,0 +1,19 @@
+.app-container { min-height: 100vh; display:flex; flex-direction:column; background: var(--white); }
+.main-container { flex:1; display:flex; background: var(--gray-50); }
+.content-area { flex:1; padding: 24px; max-width: 1280px; margin: 0 auto; }
+.page-header { background: #fff; border:1px solid var(--border); border-radius: 16px; padding:24px; margin-bottom: 16px; }
+.page-title { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+.page-subtitle { color: var(--gray-600); }
+.grid { display:grid; gap: 16px; align-items: stretch; }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.metric-card { background:#fff; border:1px solid var(--border); border-radius:16px; padding:20px; text-align:center; color: var(--gray-900); }
+.metric-icon { width: 48px; height: 48px; background: var(--gray-100); border-radius: 12px; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; color: var(--gray-700); }
+.metric-number { font-size: 32px; font-weight: 800; }
+.table-container { background:#fff; border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+.table { width:100%; border-collapse: collapse; }
+.table th { background: var(--gray-100); padding: 12px 14px; text-align:left; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--gray-700); }
+.table td { padding: 12px 14px; border-top: 1px solid var(--border); vertical-align: middle; }
+.status-badge { display:inline-block; padding: 6px 10px; border-radius: 10px; font-size: 12px; background: var(--gray-100); color: var(--gray-800); }
+@media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2,1fr);} }
+@media (max-width: 640px) { .grid-4 { grid-template-columns: 1fr;} .content-area { padding: 16px; } }
+

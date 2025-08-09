@@ -1,0 +1,4 @@
+.search-filter-bar { display:flex; gap: 12px; align-items:center; flex-wrap: wrap; }
+.search-input { position: relative; flex:1; min-width: 260px; }
+.search-input input { padding-left: 40px; }
+

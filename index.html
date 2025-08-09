@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>워크플로우 ATS</title>
+  <meta name="description" content="워크플로우 ATS 진입점" />
+</head>
+<body>
+  <noscript>이 앱은 JavaScript가 필요합니다.</noscript>
+  <script>
+    (function () {
+      var isAuthenticated = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+      if (isAuthenticated) {
+        window.location.href = './dashboard.html';
+      } else {
+        window.location.href = './public/login.html';
+      }
+    })();
+  </script>
+</body>
+</html>
+
