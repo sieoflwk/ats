@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>워크플로우 ATS - 대시보드</title>
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="워크플로우 ATS">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>W</text></svg>">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,6 +22,7 @@
   <link rel="stylesheet" href="src/assets/css/base/reset.css">
   <link rel="stylesheet" href="src/assets/css/base/variables.css">
   <link rel="stylesheet" href="src/assets/css/base/typography.css">
+  <link rel="stylesheet" href="src/assets/css/base/accessibility.css">
   <!-- Layout -->
   <link rel="stylesheet" href="src/assets/css/layout/header.css">
   <link rel="stylesheet" href="src/assets/css/layout/sidebar.css">
@@ -24,6 +36,7 @@
   <link rel="stylesheet" href="src/assets/css/components/badges.css">
   <link rel="stylesheet" href="src/assets/css/components/navigation.css">
   <!-- Pages -->
+  <link rel="stylesheet" href="src/assets/css/pages/dashboard.css">
   
   <!-- Theme -->
   <link rel="stylesheet" href="src/assets/css/themes/light.css" id="theme-stylesheet">
@@ -38,6 +51,14 @@
     </div>
   </div>
   <script type="module" src="src/js/main.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>W</text></svg>">
 </body>
 </html>
 

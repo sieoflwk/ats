@@ -1,16 +1,20 @@
 {
   "name": "workflow-ats",
   "version": "2.0.0",
-  "type": "module",
+  "description": "간단하고 효율적인 채용 관리 시스템",
+  "main": "src/js/main.js",
   "scripts": {
-    "dev": "live-server --port=3000 --entry-file=index.html",
-    "build": "echo 'Static site - no build needed'",
-    "lint": "echo 'no linter configured'",
-    "format": "echo 'format stub'",
-    "deploy": "echo 'deploy stub'"
+    "dev": "python3 -m http.server 8080",
+    "start": "python3 -m http.server 8080",
+    "test": "echo 'No tests specified' && exit 0",
+    "build": "echo 'No build process needed' && exit 0"
   },
-  "devDependencies": {
-    "live-server": "^1.2.2"
-  }
+  "keywords": ["ATS", "채용관리", "HR", "웹앱"],
+  "author": "WorkFlow Team",
+  "license": "MIT",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
-

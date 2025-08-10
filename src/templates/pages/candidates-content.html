@@ -19,21 +19,7 @@
       </table>
     </div>
   </div>
-  <!-- 상세 모달 -->
+  <!-- 상세 모달: 컨트롤러가 로드 시 자동 삽입 -->
   <div data-include="candidate-detail-modal"></div>
-  <script type="module">
-    import { CandidateController } from '../../js/pages/candidates/candidate-controller.js';
-    import { CandidateForm } from '../../js/pages/candidates/candidate-form.js';
-    const cc = new CandidateController();
-    await cc.init();
-    window.addEventListener('candidates:updated', () => cc.render((document.getElementById('candidateSearch')?.value)||''));
-    const btn = document.getElementById('openNewCandidate');
-    if (btn) btn.addEventListener('click', async () => { (new CandidateForm()).openCreate(); });
-    // 모달 템플릿 삽입
-    fetch('src/templates/pages/candidate-detail-modal.html').then(r=>r.text()).then(html=>{
-      const holder = document.querySelector('[data-include="candidate-detail-modal"]');
-      if (holder) holder.innerHTML = html;
-    });
-  </script>
 </section>
 

@@ -1,33 +1,274 @@
 <section class="page-content active" id="dashboard">
-  <div class="page-header">
-    <h1 class="page-title">대시보드</h1>
-    <p class="page-subtitle">채용 활동의 핵심 지표를 한눈에 확인하세요.</p>
-  </div>
-  <div class="grid grid-4" style="margin-bottom:24px;">
-    <div class="metric-card"><div class="metric-icon">👥</div><div class="metric-number" id="totalCandidatesCount">0</div><div class="metric-label">전체 지원자</div></div>
-    <div class="metric-card"><div class="metric-icon">✅</div><div class="metric-number" id="hiredCandidatesCount">0</div><div class="metric-label">채용 완료</div></div>
-    <div class="metric-card"><div class="metric-icon">📅</div><div class="metric-number" id="todayInterviewsCount">0</div><div class="metric-label">오늘 면접</div></div>
-    <div class="metric-card"><div class="metric-icon">🔥</div><div class="metric-number" id="activeCandidatesCount">0</div><div class="metric-label">진행 중</div></div>
-  </div>
-  <div class="grid grid-2" style="margin-bottom:24px;">
-    <div class="card">
-      <div class="card-header"><h3 class="card-title">월별 지원자 추이</h3></div>
-      <canvas id="chart_line" height="180"></canvas>
+  <!-- Toss-inspired Hero with Search & Filters -->
+  <div class="dashboard-hero">
+    <div class="hero-content">
+      <h1 class="hero-title">채용 현황을 한눈에, 더 빠르게</h1>
+      <p class="hero-subtitle">검색과 필터로 필요한 정보를 즉시 찾아보세요</p>
+      <div class="search-bar">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input id="dashboardSearch" class="search-input" type="search" placeholder="이름, 직무, 상태를 검색하세요" aria-label="대시보드 검색">
+        <button class="btn btn-primary" id="searchBtn" aria-label="검색">검색</button>
+      </div>
+      <div class="status-pills" id="statusPills" role="tablist" aria-label="상태 필터">
+        <button class="pill active" data-status="ALL" role="tab" aria-selected="true">전체</button>
+        <button class="pill" data-status="신규" role="tab" aria-selected="false">신규</button>
+        <button class="pill" data-status="서류통과" role="tab" aria-selected="false">서류 통과</button>
+        <button class="pill" data-status="면접대기" role="tab" aria-selected="false">면접 대기</button>
+        <button class="pill" data-status="최종합격" role="tab" aria-selected="false">최종 합격</button>
+        <button class="pill" data-status="불합격" role="tab" aria-selected="false">불합격</button>
+      </div>
+      <div class="hero-controls">
+        <div class="period-selector">
+          <select id="periodFilter" class="form-select" aria-label="기간 선택">
+            <option value="7">최근 7일</option>
+            <option value="30" selected>최근 30일</option>
+            <option value="90">최근 90일</option>
+            <option value="365">올해</option>
+          </select>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-outline" id="refreshDashboard">🔄 새로고침</button>
+          <button class="btn btn-primary" id="openNewCandidate">👤 새 지원자</button>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-header"><h3 class="card-title">상태별 비중</h3></div>
-      <canvas id="chart_pie" height="180"></canvas>
+  </div>
+
+  <!-- 고도화된 통계 카드 -->
+  <div class="metrics-grid">
+    <div class="metric-card primary">
+      <div class="metric-header">
+        <div class="metric-icon">👥</div>
+        <div class="metric-trend" id="candidatesTrend">+12%</div>
+      </div>
+      <div class="metric-content">
+        <div class="metric-number" id="totalCandidatesCount">0</div>
+        <div class="metric-label">전체 지원자</div>
+        <div class="metric-subtitle">이번 달 신규 지원자</div>
+      </div>
+    </div>
+    
+    <div class="metric-card success">
+      <div class="metric-header">
+        <div class="metric-icon">✅</div>
+        <div class="metric-trend" id="hiredTrend">+8%</div>
+      </div>
+      <div class="metric-content">
+        <div class="metric-number" id="hiredCandidatesCount">0</div>
+        <div class="metric-label">채용 완료</div>
+        <div class="metric-subtitle">이번 달 채용 완료</div>
+      </div>
+    </div>
+    
+    <div class="metric-card warning">
+      <div class="metric-header">
+        <div class="metric-icon">📅</div>
+        <div class="metric-trend" id="interviewsTrend">+5</div>
+      </div>
+      <div class="metric-content">
+        <div class="metric-number" id="todayInterviewsCount">0</div>
+        <div class="metric-label">오늘 면접</div>
+        <div class="metric-subtitle">예정된 면접 일정</div>
+      </div>
+    </div>
+    
+    <div class="metric-card info">
+      <div class="metric-header">
+        <div class="metric-icon">🔥</div>
+        <div class="metric-trend" id="activeTrend">+15</div>
+      </div>
+      <div class="metric-content">
+        <div class="metric-number" id="activeCandidatesCount">0</div>
+        <div class="metric-label">진행 중</div>
+        <div class="metric-subtitle">검토/면접 진행 중</div>
+      </div>
+    </div>
+    
+    <!-- 추가 KPI 지표 -->
+    <div class="metric-card secondary">
+      <div class="metric-header">
+        <div class="metric-icon">⏱️</div>
+        <div class="metric-trend" id="avgTimeTrend">-2일</div>
+      </div>
+      <div class="metric-content">
+        <div class="metric-number" id="avgHiringTime">0</div>
+        <div class="metric-label">평균 채용 기간</div>
+        <div class="metric-subtitle">지원부터 최종 합격까지</div>
+      </div>
+    </div>
+    
+    <div class="metric-card accent">
+      <div class="metric-header">
+        <div class="metric-icon">📈</div>
+        <div class="metric-trend" id="conversionTrend">+3%</div>
+      </div>
+      <div class="metric-content">
+        <div class="metric-number" id="conversionRate">0%</div>
+        <div class="metric-label">전환율</div>
+        <div class="metric-subtitle">지원자 → 채용 비율</div>
+      </div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-header"><h3 class="card-title">최근 업데이트</h3></div>
-    <div class="table-container">
-      <table class="table">
-        <thead><tr><th>이름</th><th>직무</th><th>상태</th><th>지원일</th></tr></thead>
-        <tbody id="recentCandidatesTable"><tr><td colspan="4" style="text-align:center;padding:20px;color:var(--text-secondary);">로딩 중...</td></tr></tbody>
-      </table>
+
+  <!-- 퀵 액션 -->
+  <div class="quick-actions-section">
+    <h3 class="section-title">⚡ 빠른 작업</h3>
+    <div class="quick-actions-grid">
+      <button class="quick-action-card" data-page="candidates" data-open-candidate-create>
+        <div class="quick-action-icon">👤</div>
+        <div class="quick-action-content">
+          <div class="quick-action-title">새 지원자</div>
+          <div class="quick-action-desc">지원자 정보 입력</div>
+        </div>
+      </button>
+      
+      <button class="quick-action-card" data-page="jobs">
+        <div class="quick-action-icon">💼</div>
+        <div class="quick-action-content">
+          <div class="quick-action-title">채용공고</div>
+          <div class="quick-action-desc">새 공고 등록</div>
+        </div>
+      </button>
+      
+      <button class="quick-action-card" data-page="interviews">
+        <div class="quick-action-icon">📅</div>
+        <div class="quick-action-content">
+          <div class="quick-action-title">면접 일정</div>
+          <div class="quick-action-desc">면접 예약 관리</div>
+        </div>
+      </button>
+      
+      <button class="quick-action-card" id="exportData">
+        <div class="quick-action-icon">📊</div>
+        <div class="quick-action-content">
+          <div class="quick-action-title">데이터 내보내기</div>
+          <div class="quick-action-desc">Excel/CSV 다운로드</div>
+        </div>
+      </button>
     </div>
   </div>
-  <script type="module">import { DashboardController } from '../../js/pages/dashboard/dashboard-controller.js'; (new DashboardController()).init(); import '../../js/pages/dashboard/stats-widget.js';</script>
+
+  <!-- 고도화된 차트 섹션 -->
+  <div class="charts-section">
+    <div class="charts-grid">
+      <!-- 월별 지원자 추이 -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3 class="card-title">📈 월별 지원자 추이</h3>
+          <div class="chart-controls">
+            <button class="btn-chart-type active" data-chart="line">선형</button>
+            <button class="btn-chart-type" data-chart="bar">막대</button>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart_line" height="200"></canvas>
+        </div>
+        <div class="chart-legend" id="lineChartLegend"></div>
+      </div>
+      
+      <!-- 상태별 분포 -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3 class="card-title">🎯 지원자 상태 분포</h3>
+          <div class="chart-controls">
+            <button class="btn-chart-type active" data-chart="pie">원형</button>
+            <button class="btn-chart-type" data-chart="doughnut">도넛</button>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart_pie" height="200"></canvas>
+        </div>
+        <div class="chart-legend" id="pieChartLegend"></div>
+      </div>
+      
+      <!-- 채용 퍼널 -->
+      <div class="chart-card full-width">
+        <div class="card-header">
+          <h3 class="card-title">🔄 채용 프로세스 퍼널</h3>
+          <div class="chart-info">지원부터 최종 채용까지의 전환율</div>
+        </div>
+        <div class="funnel-chart" id="funnelChart">
+          <div class="funnel-stage">
+            <div class="funnel-bar">
+              <span class="funnel-label">지원자</span>
+              <span class="funnel-count" id="funnelApplicants">0</span>
+            </div>
+          </div>
+          <div class="funnel-stage">
+            <div class="funnel-bar">
+              <span class="funnel-label">서류 통과</span>
+              <span class="funnel-count" id="funnelScreened">0</span>
+            </div>
+          </div>
+          <div class="funnel-stage">
+            <div class="funnel-bar">
+              <span class="funnel-label">면접 진행</span>
+              <span class="funnel-count" id="funnelInterviewed">0</span>
+            </div>
+          </div>
+          <div class="funnel-stage">
+            <div class="funnel-bar">
+              <span class="funnel-label">최종 채용</span>
+              <span class="funnel-count" id="funnelHired">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 최근 활동 및 알림 -->
+  <div class="activity-section">
+    <div class="activity-grid">
+      <!-- 최근 지원자 -->
+      <div class="activity-card">
+        <div class="card-header">
+          <h3 class="card-title">🆕 최근 지원자</h3>
+          <button class="btn btn-sm" data-page="candidates">전체 보기</button>
+        </div>
+        <div class="activity-list" id="recentCandidatesList">
+          <div class="activity-item loading">로딩 중...</div>
+        </div>
+      </div>
+      
+      <!-- 오늘의 일정 -->
+      <div class="activity-card">
+        <div class="card-header">
+          <h3 class="card-title">📅 오늘의 일정</h3>
+          <button class="btn btn-sm" data-page="interviews">전체 보기</button>
+        </div>
+        <div class="activity-list" id="todaySchedule">
+          <div class="activity-item loading">로딩 중...</div>
+        </div>
+      </div>
+      
+      <!-- 알림 및 할 일 -->
+      <div class="activity-card">
+        <div class="card-header">
+          <h3 class="card-title">🔔 알림 & 할 일</h3>
+          <button class="btn btn-sm" id="markAllRead">모두 읽음</button>
+        </div>
+        <div class="activity-list" id="notificationsList">
+          <div class="notification-item">
+            <div class="notification-icon">⏰</div>
+            <div class="notification-content">
+              <div class="notification-title">면접 알림</div>
+              <div class="notification-desc">30분 후 김지원님과 면접 예정</div>
+            </div>
+          </div>
+          <div class="notification-item">
+            <div class="notification-icon">📄</div>
+            <div class="notification-content">
+              <div class="notification-title">서류 검토</div>
+              <div class="notification-desc">5건의 새로운 지원서가 대기 중</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 지원자 상세 모달 템플릿 마운트 -->
+  <div data-include="candidate-detail-modal"></div>
+  
 </section>
 

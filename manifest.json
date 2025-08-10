@@ -1,0 +1,163 @@
+{
+  "name": "워크플로우 ATS - 스마트 채용 관리 시스템",
+  "short_name": "워크플로우 ATS",
+  "description": "효율적인 채용 프로세스를 위한 종합 관리 시스템",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "scope": "/",
+  "lang": "ko",
+  "dir": "ltr",
+  
+  "icons": [
+    {
+      "src": "icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  
+  "shortcuts": [
+    {
+      "name": "새 지원자 추가",
+      "short_name": "새 지원자",
+      "description": "새로운 지원자를 빠르게 등록합니다",
+      "url": "/#candidates?action=new",
+      "icons": [
+        {
+          "src": "icons/shortcut-candidate.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "오늘 면접 일정",
+      "short_name": "오늘 면접",
+      "description": "오늘 예정된 면접 일정을 확인합니다",
+      "url": "/#interviews?filter=today",
+      "icons": [
+        {
+          "src": "icons/shortcut-interview.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "채용공고 관리",
+      "short_name": "채용공고",
+      "description": "채용공고를 관리합니다",
+      "url": "/#jobs",
+      "icons": [
+        {
+          "src": "icons/shortcut-jobs.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  
+  "categories": ["business", "productivity", "utilities"],
+  
+  "screenshots": [
+    {
+      "src": "screenshots/desktop-dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "대시보드 화면"
+    },
+    {
+      "src": "screenshots/mobile-candidates.png",
+      "sizes": "360x640",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "지원자 관리 화면"
+    }
+  ],
+  
+  "features": [
+    "Cross-platform",
+    "Installable",
+    "Offline-capable"
+  ],
+  
+  "iarc_rating_id": "",
+  
+  "prefer_related_applications": false,
+  
+  "protocol_handlers": [
+    {
+      "protocol": "mailto",
+      "url": "/#compose?to=%s"
+    }
+  ],
+  
+  "share_target": {
+    "action": "/#share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "resume",
+          "accept": [
+            "application/pdf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          ]
+        }
+      ]
+    }
+  }
+}

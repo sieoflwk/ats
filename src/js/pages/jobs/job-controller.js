@@ -13,7 +13,8 @@ export default class JobController {
       (new JobForm()).openCreate();
     });
     window.addEventListener('jobs:updated', () => this.render());
-    document.getElementById('jobsTableBody')?.addEventListener('click', async (e) => {
+    const table = document.getElementById('jobsTableBody');
+    table?.addEventListener('click', async (e) => {
       const row = e.target.closest('tr'); if (!row) return;
       // 상세 편집은 다음 단계에서 링크
     });

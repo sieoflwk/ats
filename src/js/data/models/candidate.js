@@ -26,8 +26,17 @@ export class Candidate {
   }
 
   validate() {
-    if (!this.name) return '이름은 필수입니다.';
-    if (this.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) return '이메일 형식이 올바르지 않습니다.';
+    if (!this.name || this.name.trim().length < 2) return '이름은 2글자 이상 입력해주세요.';
+    if (!this.email) return '이메일은 필수입니다.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) return '이메일 형식이 올바르지 않습니다.';
+    if (!this.position) return '지원 직무는 필수입니다.';
+    if (this.phone && !/^[\d\-\+\(\)\s]+$/.test(this.phone)) return '전화번호 형식이 올바르지 않습니다.';
+    if (this.score < 0 || this.score > 100) return '점수는 0~100 사이여야 합니다.';
+    
+    // 상태 유효성 검사
+    const validStatuses = ['신규', '서류검토', '서류통과', '면접대기', '면접진행', '최종검토', '최종합격', '불합격', '보류'];
+    if (!validStatuses.includes(this.status)) return '유효하지 않은 상태입니다.';
+    
     return null;
   }
 

@@ -1,7 +1,7 @@
 import { CandidateRepository } from '../../data/repositories/candidate-repository.js';
 import { Candidate } from '../../data/models/candidate.js';
 
-export class CandidateController {
+export default class CandidateController {
   constructor() {
     this.repo = new CandidateRepository();
     this.filtered = [];
@@ -14,6 +14,16 @@ export class CandidateController {
     window.addEventListener('candidates:updated', async () => {
       await this.render((document.getElementById('candidateSearch')?.value)||'');
     });
+
+    // 대시보드에서 새 지원자 의도 전달 시 생성 모달 열기
+    try {
+      const flag = sessionStorage.getItem('openCandidateCreate');
+      if (flag === '1') {
+        sessionStorage.removeItem('openCandidateCreate');
+        const { CandidateForm } = await import('./candidate-form.js');
+        (new CandidateForm()).openCreate();
+      }
+    } catch (_) {}
   }
 
   bind() {

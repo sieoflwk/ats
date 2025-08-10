@@ -87,10 +87,13 @@ export class CandidateDetail {
       status: document.getElementById('cd_status').value.trim() || '신규',
       skills: (document.getElementById('cd_skills').value || '').split(';').map(s=>s.trim()).filter(Boolean)
     });
-    // 간단 검증
-    const { validateEmail, requireFields } = await import('../../utils/validation.js');
-    const errs = [ validateEmail(candidate.email), ...requireFields({ 이름: candidate.name, 직무: candidate.position }) ].filter(Boolean);
-    if (errs.length) { alert(errs[0]); return; }
+    // 향상된 검증
+    const validationError = candidate.validate();
+    if (validationError) {
+      const { showToast } = await import('../../components/ui/toast.js');
+      showToast(validationError, 'error');
+      return;
+    }
     showLoading('저장 중...');
     // 평가 수집
     candidate.evaluations = {
@@ -109,19 +112,49 @@ export class CandidateDetail {
     candidate.history.push({ date: new Date().toISOString(), action: '정보 저장', description: '지원자 정보가 저장되었습니다.' });
     try {
       await this.repo.save(candidate);
+      const { showToast } = await import('../../components/ui/toast.js');
+      showToast('지원자 정보가 저장되었습니다.', 'success');
+      document.getElementById('candidateDetailModal').classList.add('hidden');
+      window.dispatchEvent(new CustomEvent('candidates:updated'));
     } catch (e) {
-      console.error(e); alert('저장 중 오류가 발생했습니다.');
-    } finally { hideLoading(); }
-    document.getElementById('candidateDetailModal').classList.add('hidden');
-    window.dispatchEvent(new CustomEvent('candidates:updated'));
+      console.error(e);
+      const { showToast } = await import('../../components/ui/toast.js');
+      showToast('저장 중 오류가 발생했습니다.', 'error');
+    } finally { 
+      hideLoading(); 
+    }
   }
 
   async remove() {
     if (!this.currentId) return;
-    if (!confirm('정말 삭제하시겠습니까?')) return;
-    await this.repo.delete(this.currentId);
-    document.getElementById('candidateDetailModal').classList.add('hidden');
-    window.dispatchEvent(new CustomEvent('candidates:updated'));
+    
+    const { showConfirm } = await import('../../components/ui/dialog.js');
+    const confirmed = await showConfirm(
+      '이 지원자의 모든 정보가 삭제됩니다. 정말 삭제하시겠습니까?',
+      '지원자 삭제',
+      { danger: true, confirmText: '삭제', cancelText: '취소' }
+    );
+    
+    if (!confirmed) return;
+    
+    try {
+      const { showLoading, hideLoading } = await import('../../components/ui/spinner.js');
+      showLoading('삭제 중...');
+      await this.repo.delete(this.currentId);
+      hideLoading();
+      
+      const { showToast } = await import('../../components/ui/toast.js');
+      showToast('지원자가 삭제되었습니다.', 'success');
+      
+      document.getElementById('candidateDetailModal').classList.add('hidden');
+      window.dispatchEvent(new CustomEvent('candidates:updated'));
+    } catch (error) {
+      const { hideLoading } = await import('../../components/ui/spinner.js');
+      const { showToast } = await import('../../components/ui/toast.js');
+      hideLoading();
+      showToast('삭제 중 오류가 발생했습니다.', 'error');
+      console.error('Delete error:', error);
+    }
   }
 
   switchTab(key) {

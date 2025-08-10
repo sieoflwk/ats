@@ -1,4 +1,4 @@
-class LoginForm {
+export class LoginForm {
   constructor() {
     this.form = document.getElementById('loginForm');
     this.emailInput = document.getElementById('loginEmail');
@@ -148,22 +148,10 @@ class LoginForm {
 
   handleLoginSuccess() {
     this.showLoginError('로그인 성공! 페이지를 이동합니다...');
-    setTimeout(() => { window.location.href = '../dashboard.html'; }, 800);
+    setTimeout(() => { window.location.href = './dashboard.html'; }, 800);
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  new LoginForm();
-  const firstInput = document.getElementById('loginEmail');
-  if (firstInput) firstInput.focus();
-});
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('../sw.js')
-      .then(reg => console.log('SW 등록 성공:', reg.scope))
-      .catch(err => console.log('SW 등록 실패:', err));
-  });
-}
+// Service Worker는 메인 앱에서 등록됨
 
 
